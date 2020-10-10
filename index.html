@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Terra Incognita</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<head>
+		<title>Terra Incognita</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		
 		<style>
 			table, td, tr, th {border: 1px solid black; border-collapse: collapse; padding: 5px;}
@@ -10,10 +10,10 @@
 			p {color:black;}
 		</style>
 
-    </head>
+	</head>
 
-    <body>
-        <div>
+	<body>
+		<div>
 			<div>Введіть назву населеного пункту</div>
 			<input type="text" id="inputName" name="inputName" value="драб"><br><br>
 			<button id="btnSearch" name="btnSearch" onclick="searchByName(document.getElementById('inputName').value)">Знайти</button>
@@ -24,18 +24,18 @@
 
 				</table>
 			</div>
-        </div>
+		</div>
 		
 		<script>
 			document.getElementById('inputName')
-			  .addEventListener("keyup", function(e) {
-				if (e.code === 'Enter') {
-				  document.getElementById("btnSearch").click();
-				}
-			  });
+				.addEventListener("keyup", function(e) {
+					if (e.code === 'Enter') {
+						document.getElementById("btnSearch").click();
+					}
+				});
 
 			document.getElementById("btnSearch").onclick = function() {
-			  searchByName(document.getElementById('inputName').value)
+				searchByName(document.getElementById('inputName').value)
 			}
 
 			function searchByName(name) {	
@@ -63,9 +63,9 @@
 							<th>Площа (Га)</th>
 							<th>Ціна документації</th>
 							<th>Ціна за м.кв</th>
-						  </tr>
+						</tr>
 						`;
-						  
+						
 						$.each(data,function(key,value){
 							html +='<tr>';
 							html +='<td style="text-align:left">'+ value.Name + '</td>';
@@ -81,5 +81,5 @@
 			}
 		</script>
 		
-    </body>
+	</body>
 </html>
