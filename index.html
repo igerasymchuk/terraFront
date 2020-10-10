@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Terra Incognita</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		
+		<style>
+			table, td, tr, th {border: 1px solid black; border-collapse: collapse; padding: 5px;}
+			tr {text-align:center;}
+			p {color:black;}
+		</style>
+
+    </head>
+
+    <body>
+        <div>
+			<div>Введіть назву населеного пункту</div>
+			<input type="text" id="inputName" name="inputName" value="драб"><br><br>
+			<button id="btnSearch" name="btnSearch" onclick="searchByName(document.getElementById('inputName').value)">Знайти</button>
+			<br />
+			<br />
+			<div id="hidden">
+				<table id="results" style="width:80%;">
+
+				</table>
+			</div>
+        </div>
+		
+		<script>
+			document.getElementById('inputName')
+			  .addEventListener("keyup", function(e) {
+				if (e.code === 'Enter') {
+				  document.getElementById("btnSearch").click();
+				}
+			  });
+
+			document.getElementById("btnSearch").onclick = function() {
+			  searchByName(document.getElementById('inputName').value)
+			}
+
+			function searchByName(name) {	
+				$('#results').hide('fast');
+				
+				$.ajax({
+					headers: {"Accept": "application/json"},
+					type: 'GET',
+					url: 'https://terra-sql-marathon.herokuapp.com/api/lands?name='+name,
+					crossDomain: true,
+					beforeSend: function(xhr){
+						xhr.withCredentials = true;
+					},
+					success: function(data, textStatus, request){
+						showTable(data)
+					}
+				});
+			}
+			
+			function showTable(data) {
+						var html = `<tr>
+							<th>Назва</th>
+							<th>Населення</th>
+							<th>Рік</th>
+							<th>Площа (Га)</th>
+							<th>Ціна документації</th>
+							<th>Ціна за м.кв</th>
+						  </tr>
+						`;
+						  
+						$.each(data,function(key,value){
+							html +='<tr>';
+							html +='<td style="text-align:left">'+ value.Name + '</td>';
+							html +='<td>'+ value.PeopleCount + '</td>';
+							html +='<td>'+ value.ExpertizeYear + '</td>';
+							html +='<td>'+ value.AreaInGA + '</td>';
+							html +='<td>'+ value.DocumentationCost + '</td>';
+							html +='<td>'+ value.PricePerSqMeter + '</td>';
+							html +='</tr>';
+						});
+						$('#results').show('fast');
+						$('#results').html(html);			
+			}
+		</script>
+		
+    </body>
+</html>
